@@ -27,18 +27,22 @@ export const AppContextProvider = ({ children }) => {
       if (data.success) {
         setUser(data.user);
       } else {
-        toast.error(data.message, " else fetchUser appcontext");
+        toast.error(data.message);
       }
     } catch (error) {
       const status = error.response?.status;
       const msg = error.response?.data?.error || error.message || "";
-      if (status === 401 || msg.toLowerCase().includes("jwt expired") || msg.toLowerCase().includes("unauthorized")) {
+      if (
+        status === 401 ||
+        msg.toLowerCase().includes("jwt expired") ||
+        msg.toLowerCase().includes("unauthorized")
+      ) {
         localStorage.removeItem("token");
         setToken(null);
         setUser(null);
         toast.error("Session expired. Please login again.");
       } else {
-        toast.error(error.message, " catch fetchUser appcontext");
+        toast.error(error.message);
       }
     } finally {
       setLoadingUser(false);
@@ -53,7 +57,7 @@ export const AppContextProvider = ({ children }) => {
       });
       await fetchUsersChats();
     } catch (error) {
-      toast.error(error.message," catch createNewChat appcontext");
+      toast.error(error.message);
     }
   };
 
@@ -73,14 +77,12 @@ export const AppContextProvider = ({ children }) => {
           setSelectedChat(firstChat);
         }
       } else {
-        toast.error(data.message, " fetchUsersChats");
+        toast.error(data.message);
       }
     } catch (error) {
-      toast.error(error.message, " fetchUsersChats");
+      toast.error(error.message);
     }
   };
-
-
 
   useEffect(() => {
     if (theme === "dark") {
@@ -98,7 +100,6 @@ export const AppContextProvider = ({ children }) => {
       setChats([]);
       setSelectedChat(null);
     }
-   
   }, [user]);
 
   useEffect(() => {
